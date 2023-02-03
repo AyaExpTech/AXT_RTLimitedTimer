@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXT_RTLimited-Timer</title>
+    <!-- 外部ファイル -->
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body class="content-gap">
+    <section>
+        <h1 class="text-middle">AXT_Recordable-Time-Limited-Timer</h1>
+    </section>
+    <div class="column">
+        <section>
+            <p class="text-middle" id="counter">00:00:00.000</p>
+        </section>
+        <div class="content-gap">
+            <section>
+                <p>
+                    記録制限時間 :
+                    <input type="number" id="input-hour" name="input-hour" min="1" max="3">時間
+                    <input type="number" id="input-min" name="input-min" min="1" max="2">分
+                    <input type="number" id="input-sec" name="input-sec" min="1" max="2">秒
+                </p>
+            </section>
+            <section>
+                <div class="column">
+                    <button onclick="start()">
+                        <p>Start</p>
+                    </button>
+                    <button onclick="stop()">
+                        <p>Stop</p>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+    <section>
+        <p class="text-middle">Copyright (c) 2023- 綾急技研(AyaExpTech)</p>
+    </section>
+</body>
+
+</html>

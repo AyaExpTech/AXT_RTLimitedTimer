@@ -1,0 +1,81 @@
+/* フォント */
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;300;400;500;700;800;900&display=swap');
+
+/* とりあえず背景を適当なグラデにする */
+html {
+    background: linear-gradient(180deg, #55a, #224);
+    min-height: 100vh;
+    color: #EAEAFB;
+    font-size: 15px;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'M PLUS 1p', sans-serif;
+}
+
+p {
+    margin: 0.4rem;
+}
+
+body {
+    margin: 0.8rem;
+}
+
+.content-gap>* {
+    margin: 0.8rem 0;
+}
+
+.content-gap>*:first-child {
+    margin-top: 0;
+}
+
+.content-gap>*:last-child {
+    margin-bottom: 0;
+}
+
+/* sectionをグラスモーフィズムにする */
+section {
+    background: #FFFFFF33;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+h1 {
+    margin: 4px;
+}
+
+/* 中央寄せクラスにしろよもう */
+.text-middle {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* 2分割 */
+div.column {
+    display: flex;
+    gap: 1rem;
+}
+
+div.column>* {
+    width: 100%;
+}
+
+/* 時間を入れるところ */
+#counter {
+    width: 100%;
+    font-size: 2rem;
+    margin: 0;
+    vertical-align: middle;
+    justify-content: center;
+}
+
+/* input */
+input {
+    margin: 0;
+    height: 100%;
+    width: 3rem;
+}
