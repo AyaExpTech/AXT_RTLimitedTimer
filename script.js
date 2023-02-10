@@ -32,24 +32,37 @@ const objToBase64 = (obj) => btoa(JSON.stringify(obj));
 const getCookieByKey = (key) => (document.cookie.match(new RegExp(key + '\=([^\;]*)\;*')) ?? [0, undefined])[1];
 
 /**
- * init() - ページロード時実行。cookieにlogが存在しなければ"1970年1月1日00:00(UTC)にOFF"を加えます
+ * init() - ページロード時実行。cookieにlogが存在しなければ"1970年1月1日00:00(UTC)にOFF"を加えます。
+ * また、range設定を過去のrange設定から引っ張り出してきます。
  */
 const init = () => {
     if (getCookieByKey("log") == undefined) {
         const newObj = [[0, false]];
-        document.cookie = "log=" + objToBase64(newObj) + ";";
+        document.cookie = "log=" + objToBase64(newObj) + "; max-age=360000";
+    }
+    if (getCookieByKey("range") != undefined) {
+        const rangeSet = base64toObj(getCookieByKey("range"));
+        document.querySelector("#input-hour").value = rangeSet[0];
+        document.querySelector("#input-min").value = rangeSet[1];
+        document.querySelector("#input-sec").value = rangeSet[2];
     }
 };
 
 /**
- * start() - Startボタン押下時実行。直近のログがOFFなら"現在時刻にON"を加えます
+ * start() - Startボタン押下時実行。直近のログがOFFなら"現在時刻にON"を加えます。また、Range設定をrangeに保存します。
  */
 const start = () => {
     const log = base64toObj(getCookieByKey("log"));
     if (!log.at(-1)[1]) {
         log.push([Date.now(), true]);
     }
-    document.cookie = "log=" + objToBase64(log) + ";";
+    document.cookie = "log=" + objToBase64(log) + "; max-age=360000";
+    const rangeSet = [
+        document.querySelector("#input-hour").value,
+        document.querySelector("#input-min").value,
+        document.querySelector("#input-sec").value
+    ];
+    document.cookie = "range=" + objToBase64(rangeSet) + "; max-age=360000";
 };
 
 /**
@@ -60,7 +73,7 @@ const stop = () => {
     if (log.at(-1)[1]) {
         log.push([Date.now(), false]);
     }
-    document.cookie = "log=" + objToBase64(log) + ";";
+    document.cookie = "log=" + objToBase64(log) + "; max-age=360000;";
 };
 
 /**
@@ -68,7 +81,7 @@ const stop = () => {
  */
 const reset = () => {
     const newObj = [[0, false]];
-    document.cookie = "log=" + objToBase64(newObj) + ";";
+    document.cookie = "log=" + objToBase64(newObj) + "; max-age=360000";
 }
 
 /**
@@ -107,3 +120,20 @@ window.addEventListener("load", function () {
     init();
     setInterval(update, 1 / 60);
 });
+
+/**
+ * キー押下時(正確にはキー押下をやめたとき)、特定のボタンの代わりをします
+ * S:Start, P:Stop, R:Reset
+ */
+document.addEventListener('keyup', keyupEvent, false);
+function keyupEvent(event) {
+    if (event.key === "s" || event.key === "S") {
+        start();
+    }
+    if (event.key === "p" || event.key === "P") {
+        stop();
+    }
+    if (event.key === "r" || event.key === "R") {
+        reset();
+    }
+}
